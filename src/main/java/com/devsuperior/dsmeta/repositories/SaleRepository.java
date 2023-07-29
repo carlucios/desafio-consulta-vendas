@@ -2,9 +2,8 @@ package com.devsuperior.dsmeta.repositories;
 
 import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
 import com.devsuperior.dsmeta.dto.SummaryBySellerDTO;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.devsuperior.dsmeta.entities.Sale;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;

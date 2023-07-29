@@ -1,21 +1,20 @@
 package com.devsuperior.dsmeta.services;
 
+import com.devsuperior.dsmeta.dto.SaleMinDTO;
+import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
+import com.devsuperior.dsmeta.dto.SummaryBySellerDTO;
+import com.devsuperior.dsmeta.entities.Sale;
+import com.devsuperior.dsmeta.repositories.SaleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
-import com.devsuperior.dsmeta.dto.SummaryBySellerDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.devsuperior.dsmeta.dto.SaleMinDTO;
-import com.devsuperior.dsmeta.entities.Sale;
-import com.devsuperior.dsmeta.repositories.SaleRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SaleService {
