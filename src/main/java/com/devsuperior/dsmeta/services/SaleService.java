@@ -48,6 +48,7 @@ public class SaleService {
 		return repository.searchSaleWithFilters(minDate, maxDate, name);
 	}
 
+	@Transactional(readOnly = true)
 	public List<SummaryBySellerDTO> searchSummaryBySeller(String minDateStr, String maxDateStr) {
 		LocalDate minDate;
 		LocalDate maxDate;

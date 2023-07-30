@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
-    @Query("SELECT new com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO(obj.id, obj.amount, obj.date, obj.seller.name) " +
+    @Query("SELECT new com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO(obj.id, obj.date, obj.amount, obj.seller.name) " +
             "FROM Sale obj " +
             "WHERE UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%'))" +
             "AND obj.date BETWEEN :minDate AND :maxDate")
