@@ -4,8 +4,12 @@ import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleWithSellerNameDTO;
 import com.devsuperior.dsmeta.dto.SummaryBySellerDTO;
 import com.devsuperior.dsmeta.entities.Sale;
+import com.devsuperior.dsmeta.projections.SaleWithSellerNameProjection;
+import com.devsuperior.dsmeta.projections.SummaryBySellerProjection;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +19,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
@@ -30,9 +35,11 @@ public class SaleService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<SaleWithSellerNameDTO> searchSaleWithFilters(String minDateStr, String maxDateStr, String name) {
+	public Page<SaleWithSellerNameDTO> searchSaleWithFilters(String minDateStr, String maxDateStr, String name, Pageable pageable) {
 		LocalDate minDate;
 		LocalDate maxDate;
+		Page<SaleWithSellerNameProjection> result;
+
 		if (Objects.equals(maxDateStr, "")) {
 			LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 			maxDate = today;
@@ -45,7 +52,9 @@ public class SaleService {
 			minDate = LocalDate.parse(minDateStr);
 		}
 
-		return repository.searchSaleWithFilters(minDate, maxDate, name);
+		result = repository.searchSaleWithFilters(minDate, maxDate, name, pageable);
+
+		return result.map(SaleWithSellerNameDTO::new);
 	}
 
 	@Transactional(readOnly = true)
@@ -64,6 +73,7 @@ public class SaleService {
 			minDate = LocalDate.parse(minDateStr);
 		}
 
-		return repository.searchSummaryBySeller(minDate, maxDate);
+		List<SummaryBySellerProjection> result = repository.searchSummaryBySeller(minDate, maxDate);
+		return result.stream().map(SummaryBySellerDTO::new).collect(Collectors.toList());
 	}
 }
